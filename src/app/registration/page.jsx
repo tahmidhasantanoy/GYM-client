@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import registerImage from "../../../public/Animation/register.svg";
 import { useRegTrainerMutation } from "../redux/api/registerApi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegistrationPage = () => {
   const [regTrainer] = useRegTrainerMutation();
@@ -23,14 +25,19 @@ const RegistrationPage = () => {
       fullname: fullname,
       email: email,
       password: password,
+      role: "trainer",
     };
 
-    console.log(trainerData); //ok
+    console.log("trainerData", trainerData);
 
     try {
       const responseFromRegTrainerApi = await regTrainer(trainerData);
 
       console.log("responseFromRegTrainerApi", responseFromRegTrainerApi);
+
+      if (responseFromRegTrainerApi.data.status === "success") {
+        toast.success("Registration successful");
+      }
     } catch (error) {
       console.log(error.message);
     }
