@@ -3,6 +3,7 @@ import "./globals.css";
 import Providers from "@/lib/Providers/Provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "@/components/shared/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,8 +17,9 @@ export default function RootLayout({ children }) {
     <Providers>
       <html lang="en">
         <body className={inter.className}>
+          <Navbar />
           <ToastContainer />
-          {children}
+          <div className="min-h-screen w-[90%] mx-auto">{children}</div>
         </body>
       </html>
     </Providers>
