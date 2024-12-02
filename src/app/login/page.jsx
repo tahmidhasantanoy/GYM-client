@@ -5,10 +5,13 @@ import Link from "next/link";
 import loginImage from "../../../public/Animation/Reset password-pana.svg";
 import { useLoginUserMutation } from "../redux/api/loginApi";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setEmail } from "../redux/features/body/bodySlice";
 
 const LoginPage = () => {
   const [loginUser] = useLoginUserMutation();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -20,6 +23,8 @@ const LoginPage = () => {
     console.log(data);
 
     const { email, password } = data;
+    var successfullEmail = email;
+    console.log(successfullEmail);
 
     const userInfo = {
       email: email,
@@ -29,6 +34,14 @@ const LoginPage = () => {
     try {
       const responseFromLoginUserApi = await loginUser(userInfo);
       if (responseFromLoginUserApi?.data?.success == true) {
+        console.log(responseFromLoginUserApi);
+        // localStorage.setItem("email", "tahmid");
+
+        console.log(successfullEmail);
+        console.log("object");
+        // here dispatch the action
+        // dispatch(setEmail(successfullEmail));
+        dispatch(setEmail(successfullEmail));
         router.push("/");
       }
     } catch (err) {

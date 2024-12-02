@@ -1,6 +1,6 @@
 import { baseApi } from "./baseApi";
 
-const extendedApi = baseApi.injectEndpoints({
+const loginApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     loginUser: build.mutation({
       query: (userInfo) => ({
@@ -14,4 +14,4 @@ const extendedApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useLoginUserMutation } = extendedApi;
+export const { useLoginUserMutation } = loginApi;

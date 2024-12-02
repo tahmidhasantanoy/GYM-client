@@ -1,9 +1,16 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+
+  //  here i want to get the user full data
+  const email = useSelector((state) => state?.gym?.currentEmail);
+  console.log("email by redux", email); // undefined
+  localStorage.setItem("loggedInEmail", email);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -48,7 +55,7 @@ const Navbar = () => {
                 <Link href="/about">About</Link>
               </li>
               <li>
-                <Link href="/contact">Contact</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </li>
               <div className="navbar-end">
                 <Link href="/login" className="btn btn-primary">
@@ -73,7 +80,7 @@ const Navbar = () => {
         <div className="flex justify-evenly w-[450px]">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/dashboard">Dashboard</Link>
         </div>
         <div className="navbar-end">
           <Link href="/login" className="btn btn-primary">
