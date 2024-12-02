@@ -3,19 +3,40 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Link from "next/link";
 import loginImage from "../../../public/Animation/Reset password-pana.svg";
+import { useLoginUserMutation } from "../redux/api/loginApi";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const [loginUser] = useLoginUserMutation();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+
+    const { email, password } = data;
+
+    const userInfo = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const responseFromLoginUserApi = await loginUser(userInfo);
+      if (responseFromLoginUserApi?.data?.success == true) {
+        router.push("/");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200">
       <div className="flex flex-col md:flex-row items-center bg-white shadow-2xl rounded-lg p-8 w-full max-w-[1300px]">
         {/* Left Section - Image */}
         <div className="md:w-1/2 text-center mb-6 md:mb-0">
